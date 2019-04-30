@@ -1,0 +1,15 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <hr>
+  <div>
+    <input type="button" value="GetData" (click)="getGridDataV2()">
+  </div>
+  <div>
+    <app-custom-grid #grid [GridData]="data" [GridDataType]="1" [GridHeaders]="headers"
+      (getGridData)="getGridDataV1($event)" (cellValueChange)="cellValueChanged($event)">
+    </app-custom-grid>
+  </div>
+</div>

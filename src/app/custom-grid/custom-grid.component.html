@@ -1,0 +1,43 @@
+<table>
+  <tr>
+    <th>*</th>
+    <th *ngFor="let colIndex of createRange(formattedGridData.columnsCount)" [contextMenu]="columnMenu"
+      [contextMenuSubject]="colIndex">
+      <div>{{colIndex+1}}</div>
+    </th>
+  </tr>
+  <tbody>
+    <tr *ngFor="let rowIndex of createRange(formattedGridData.rowsCount)">
+      <td [contextMenu]="rowMenu" [contextMenuSubject]="rowIndex">{{rowIndex + 1}}</td>
+      <td *ngFor="let colIndex of createRange(formattedGridData.columnsCount)">
+        <!-- <app-grid-cell [cellValue]="getCellData(rowIndex, colIndex)" [rowIndex]="rowIndex" [colIndex]="colIndex"
+          (cellValueChange)="cellValueChanged($event)">
+        </app-grid-cell> -->
+        <app-inline-edit [cellValue]="getCellData(rowIndex, colIndex)" type="text"
+          (cellValueChange)="cellValueChanged($event,rowIndex, colIndex)"> </app-inline-edit>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<context-menu #columnMenu>
+  <ng-template contextMenuItem (execute)="onContextMenuClick($event,'InsertColumnLeft')">
+    <div>Insert Column Left</div>
+  </ng-template>
+  <ng-template contextMenuItem (execute)="onContextMenuClick($event,'InsertColumnRight')">
+    <div>Insert Column Right</div>
+  </ng-template>
+  <ng-template contextMenuItem (execute)="onContextMenuClick($event,'DeleteColumn')">
+    <div>Delete Column</div>
+  </ng-template>
+</context-menu>
+<context-menu #rowMenu>
+  <ng-template contextMenuItem (execute)="onContextMenuClick($event,'InsertRowAbove')">
+    <div>Insert Row Above</div>
+  </ng-template>
+  <ng-template contextMenuItem (execute)="onContextMenuClick($event,'InsertRowBelow')">
+    <div>Insert Row Below</div>
+  </ng-template>
+  <ng-template contextMenuItem (execute)="onContextMenuClick($event,'DeleteRow')">
+    <div>Delete Row</div>
+  </ng-template>
+</context-menu>

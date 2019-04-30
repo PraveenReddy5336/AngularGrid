@@ -1,0 +1,8 @@
+<div>
+  <div *ngIf="editing">
+    <input #editCell (blur)="onBlur($event)" [name]="cellValue" [(ngModel)]="cellValue" />
+  </div>
+  <div class="cell-area" *ngIf="!editing" (click)="beginEdit(cellValue)" (focus)="beginEdit(cellValue)" tabindex="0">
+    {{cellValue}}
+  </div>
+</div>
