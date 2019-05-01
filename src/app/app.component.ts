@@ -8,7 +8,7 @@ import { CustomGridComponent } from './custom-grid/custom-grid.component';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('grid') grid = new CustomGridComponent();
+  @ViewChild('grid') grid: CustomGridComponent;
 
   title = 'CustomGrid';
 

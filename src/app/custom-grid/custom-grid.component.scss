@@ -9,7 +9,7 @@ table td, table th {
   padding: 8px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+// table tr:nth-child(even){background-color: #f2f2f2;}
 
 table tr:hover {background-color: #ddd;}
 
@@ -29,4 +29,9 @@ td:first-child{
 .cell-data{
     min-width: 20px;
     min-height: 10px;
+}
+
+
+.highlight-color{
+background-color: antiquewhite;
 }

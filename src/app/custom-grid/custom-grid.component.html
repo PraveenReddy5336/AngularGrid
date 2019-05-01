@@ -1,7 +1,15 @@
 <table>
+  <colgroup>
+    <col #col>
+    <ng-container *ngFor="let colIndex of createRange(formattedGridData.columnsCount)">
+      <col #col>
+    </ng-container>
+
+  </colgroup>
   <tr cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropColumn($event)">
     <th>*</th>
-    <th cdkDrag *ngFor="let colIndex of createRange(formattedGridData.columnsCount)" [contextMenu]="columnMenu"
+    <th (click)="highlightColumn(colIndex + 1)" cdkDrag
+      *ngFor="let colIndex of createRange(formattedGridData.columnsCount)" [contextMenu]="columnMenu"
       [contextMenuSubject]="colIndex">
       <div>{{colIndex+1}}</div>
     </th>

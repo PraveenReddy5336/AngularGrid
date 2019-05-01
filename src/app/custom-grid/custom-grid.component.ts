@@ -1,15 +1,22 @@
 import {
   Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ViewChildren,
+  QueryList,
+  AfterViewInit,
+  Renderer2,
+  ElementRef
 } from '@angular/core';
 import { EnumGridDataType, GridData, GridCell, GridContextOptions } from './custom-grid.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ContextMenuService } from '../context-menu/context-menu.service';
 @Component({
   selector: 'app-custom-grid',
   templateUrl: './custom-grid.component.html',
   styleUrls: ['./custom-grid.component.scss'],
 })
-export class CustomGridComponent implements OnInit, OnChanges {
+export class CustomGridComponent implements OnChanges, AfterViewInit {
+
   private _headers = [];
   private _formattedData = [];
   private _gridDataType: number;
@@ -41,13 +48,19 @@ export class CustomGridComponent implements OnInit, OnChanges {
   @Output() public getGridData: EventEmitter<any> = new EventEmitter();
   @Output() public cellValueChange: EventEmitter<any> = new EventEmitter();
 
+  @ViewChildren('col') private cols: QueryList<ElementRef>;
+
   public headerLen = 0;
   public formattedGridData = new GridData();
 
-  constructor() {
+  constructor(private renderer: Renderer2, private _contextMenuService: ContextMenuService, ) {
+
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
+    this._contextMenuService.show.subscribe(menuEvent => {
+      this.highlightColumn(menuEvent.item + 1);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -63,6 +76,13 @@ export class CustomGridComponent implements OnInit, OnChanges {
     if (gridDataType && sourceData && sourceData.currentValue.length) {
       this.formatSourceData();
     }
+  }
+
+  highlightColumn(colIndex: any) {
+    this.cols.forEach((ele, index) => {
+      colIndex === index ? this.renderer.addClass(ele.nativeElement, 'highlight-color') :
+        this.renderer.removeClass(ele.nativeElement, 'highlight-color');
+    });
   }
 
   onContextMenuClick(event, commandText) {
