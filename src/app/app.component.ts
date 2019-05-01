@@ -20,9 +20,9 @@ export class AppComponent implements OnInit {
   }
 
   PrepareSampleData() {
-    return Array.apply(null, new Array(30)).map((val1, rowIndex) => {
-      return Array.apply(null, new Array(15)).map((val2, colIndex) => {
-        return `R:${rowIndex}-C:${colIndex}`;
+    return Array.apply(null, new Array(5)).map((val1, rowIndex) => {
+      return Array.apply(null, new Array(6)).map((val2, colIndex) => {
+        return `R:${rowIndex + 1}-C:${colIndex + 1}`;
       });
     });
   }

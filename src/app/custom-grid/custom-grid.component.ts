@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import { EnumGridDataType, GridData, GridCell, GridContextOptions } from './custom-grid.service';
-
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-custom-grid',
   templateUrl: './custom-grid.component.html',
@@ -229,6 +229,40 @@ export class CustomGridComponent implements OnInit, OnChanges {
     if (index !== -1 && this.formattedGridData.formattedData[index].actualData !== value) {
       this.formattedGridData.formattedData[index].actualData = value;
       this.cellValueChange.emit(cellobj);
+    }
+  }
+
+
+  dropColumn(event: CdkDragDrop<string[]>) {
+    if (event.previousIndex > event.currentIndex) {
+      this.formattedGridData.formattedData.map((obj: GridCell) => {
+        obj.columnIndex = (obj.columnIndex >= event.currentIndex && obj.columnIndex < event.previousIndex) ?
+          (obj.columnIndex + 1) : (obj.columnIndex === event.previousIndex) ? event.currentIndex : obj.columnIndex;
+        return obj;
+      });
+    } else if (event.previousIndex < event.currentIndex) { // 3 5
+      this.formattedGridData.formattedData.map((obj: GridCell) => {
+        obj.columnIndex = (obj.columnIndex <= event.currentIndex && obj.columnIndex > event.previousIndex) ?
+          (obj.columnIndex - 1) : (obj.columnIndex === event.previousIndex) ? event.currentIndex : obj.columnIndex;
+        return obj;
+      });
+    }
+  }
+
+  dropRow(event: CdkDragDrop<string[]>) {
+    console.log(event.previousIndex, event.currentIndex);
+    if (event.previousIndex > event.currentIndex) {
+      this.formattedGridData.formattedData.map((obj: GridCell) => {
+        obj.rowIndex = (obj.rowIndex >= event.currentIndex && obj.rowIndex < event.previousIndex) ?
+          (obj.rowIndex + 1) : (obj.rowIndex === event.previousIndex) ? event.currentIndex : obj.rowIndex;
+        return obj;
+      });
+    } else if (event.previousIndex < event.currentIndex) { // 3 5
+      this.formattedGridData.formattedData.map((obj: GridCell) => {
+        obj.rowIndex = (obj.rowIndex <= event.currentIndex && obj.rowIndex > event.previousIndex) ?
+          (obj.rowIndex - 1) : (obj.rowIndex === event.previousIndex) ? event.currentIndex : obj.rowIndex;
+        return obj;
+      });
     }
   }
 }

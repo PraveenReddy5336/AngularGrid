@@ -1,14 +1,15 @@
 <table>
-  <tr>
+  <tr cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropColumn($event)">
     <th>*</th>
-    <th *ngFor="let colIndex of createRange(formattedGridData.columnsCount)" [contextMenu]="columnMenu"
+    <th cdkDrag *ngFor="let colIndex of createRange(formattedGridData.columnsCount)" [contextMenu]="columnMenu"
       [contextMenuSubject]="colIndex">
       <div>{{colIndex+1}}</div>
     </th>
   </tr>
   <tbody>
-    <tr *ngFor="let rowIndex of createRange(formattedGridData.rowsCount)">
-      <td [contextMenu]="rowMenu" [contextMenuSubject]="rowIndex">{{rowIndex + 1}}</td>
+    <tr cdkDropList cdkDropListOrientation="vertical" *ngFor="let rowIndex of createRange(formattedGridData.rowsCount)"
+      (cdkDropListDropped)="dropRow($event)">
+      <td cdkDrag [contextMenu]="rowMenu" [contextMenuSubject]="rowIndex">{{rowIndex + 1}}</td>
       <td *ngFor="let colIndex of createRange(formattedGridData.columnsCount)">
         <!-- <app-grid-cell [cellValue]="getCellData(rowIndex, colIndex)" [rowIndex]="rowIndex" [colIndex]="colIndex"
           (cellValueChange)="cellValueChanged($event)">
